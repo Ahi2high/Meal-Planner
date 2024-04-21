@@ -5,7 +5,7 @@ Welcome to the Celiac Meal Planner! This web application allows users to create 
 ## Pages
 
 ### Meal Planner
-The Meal Planner page (`meal_planner.html`) allows users to select meals for breakfast, lunch, and dinner from a predefined list of options. Users can then generate a 7-day meal plan and save it for future reference.
+The Meal Planner page (`meal_planner.html`) allows users to select meals for breakfast, lunch, and dinner from a predefined list of options. Users can then generate a meal plan and save it for future reference.
 
 ### View/Edit Meal Plan
 The View/Edit Meal Plan page (`meal_viewer.html`) enables users to view their current meal plan and make any necessary changes. Users can edit meal selections, print the meal plan, and download it as a CSV file. Additionally, users can select dates to add meals and view them in a list.
