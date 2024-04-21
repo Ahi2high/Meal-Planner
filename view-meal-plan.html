@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planner</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/flatpickr.min.css">
+</head>
+<body>
+    <header>
+        <h1>View/Edit Meal Plan</h1>
+    </header>
+    
+    <main>
+        <section id="meal-plan">
+            <h2>Current Meal Plan</h2>
+            <form id="edit-meal-form">
+                <label for="breakfast-select">Breakfast:</label>
+                <select id="breakfast-select"></select><br><br>
+                <label for="lunch-select">Lunch:</label>
+                <select id="lunch-select"></select><br><br>
+                <label for="dinner-select">Dinner:</label>
+                <select id="dinner-select"></select><br><br>
+            </form>
+            <button id="print-btn">Print</button>
+            <button id="download-csv-btn">Download as CSV</button>
+        </section>
+
+        <section id="calendar-section">
+            <h2>Select Date to Add Meal</h2>
+            <input type="text" id="datepicker" placeholder="Select Date">
+            <button id="add-meal-btn">Add Meal to Selected Date</button>
+            <ul id="meal-list"></ul>
+        </section>
+    </main>
+
+    <script src="meal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/flatpickr.min.js"></script>
+    <script>
+        // Define meal options
+        const breakfastOptions = [
+            "Scrambled Eggs",
+            "Omelette",
+            "Yogurt with Fruit",
+            "Gluten-Free Pancakes",
+            "Fruit Salad",
+            "Smoothie",
+            "Cereal (Gluten-Free)",
+            "Quinoa Porridge"
+        ];
+
+        const lunchOptions = [
+            "Grilled Chicken Salad",
+            "Quinoa Salad",
+            "Vegetable Stir-Fry with Rice",
+            "Turkey Wrap with Gluten-Free Bread",
+            "Gluten-Free Pizza",
+            "Salmon with Roasted Vegetables",
+            "Taco Salad",
+            "Sushi Rolls"
+        ];
+
+        const dinnerOptions = [
+            "Baked Salmon with Steamed Vegetables",
+            "Gluten-Free Pasta with Tomato Sauce",
+            "Stir-Fried Tofu with Rice Noodles",
+            "Grilled Steak with Baked Potatoes",
+            "Vegetable Curry with Quinoa",
+            "Honey Glazed Chicken with Roasted Sweet Potatoes",
+            "Shrimp Stir-Fry with Brown Rice",
+            "Vegetable Lasagna (Gluten-Free)"
+        ];
+
+        // Display meal options in selects
+        const breakfastSelect = document.getElementById('breakfast-select');
+        const lunchSelect = document.getElementById('lunch-select');
+        const dinnerSelect = document.getElementById('dinner-select');
+
+        function displayMealOptions(options, select) {
+            options.forEach(option => {
+                const optionElem = document.createElement('option');
+                optionElem.value = option;
+                optionElem.textContent = option;
+                select.appendChild(optionElem);
+            });
+        }
+
+        displayMealOptions(breakfastOptions, breakfastSelect);
+        displayMealOptions(lunchOptions, lunchSelect);
+        displayMealOptions(dinnerOptions, dinnerSelect);
+
+        // Initialize flatpickr for date picker
+        const datepicker = flatpickr('#datepicker', {
+            dateFormat: 'Y-m-d',
+            minDate: 'today'
+        });
+
+        // Function to add meal to selected date
+        const addMealBtn = document.getElementById('add-meal-btn');
+        const mealList = document.getElementById('meal-list');
+
+        addMealBtn.addEventListener('click', function() {
+            const selectedDate = datepicker.selectedDates[0];
+            const formattedDate = selectedDate ? selectedDate.toLocaleDateString() : '';
+            const selectedBreakfast = breakfastSelect.value;
+            const selectedLunch = lunchSelect.value;
+            const selectedDinner = dinnerSelect.value;
+
+            if (selectedDate && (selectedBreakfast || selectedLunch || selectedDinner)) {
+                const mealItem = document.createElement('li');
+                mealItem.textContent = `${formattedDate}: Breakfast - ${selectedBreakfast}, Lunch - ${selectedLunch}, Dinner - ${selectedDinner}`;
+                mealList.appendChild(mealItem);
+            } else {
+                alert('Please select a date and at least one meal option.');
+            }
+        });
+    </script>
+</body>
+</html>
